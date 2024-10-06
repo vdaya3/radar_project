@@ -54,31 +54,31 @@
       <div id="error-container" class="error-container home-page"></div>
 
       <!-- Form for File Upload -->
-      <div class="input-sheet-form home-page">
-        <h2>Upload File</h2>
-        <form id="file-upload-form" method="post" enctype="multipart/form-data">
-          <input type="file" id="fileInput" name="file" accept=".csv, .json" required />
-          <button type="submit">Upload</button>
-        </form>
-      </div>
+     <div class="input-sheet-form home-page">
+  <p>
+    Enter the URL of your
+    <a href="https://www.thoughtworks.com/radar/byor" target="_blank">Google Sheet, CSV or JSON</a> file below…
+  </p>
 
-      <div class="input-sheet-form home-page">
-        <p>
-          Enter the URL of your
-          <a href="https://www.thoughtworks.com/radar/byor" target="_blank">Google Sheet, CSV or JSON</a> file below…
-        </p>
-        <form id="byor-form-submit" method="get">
-          <input
-            type="text"
-            name="documentId"
-            id="document-input"
-            placeholder="e.g. https://docs.google.com/spreadsheets/d/<sheetid> or hosted CSV/JSON file"
-            readonly
-          />
-          <input type="submit" value="Build my radar" />
-          <a href="https://www.thoughtworks.com/radar/byor#guide">Need help?</a>
-        </form>
-      </div>
+  <!-- Upload form aligned with flexbox -->
+  <form id="file-upload-form" method="post" enctype="multipart/form-data" class="d-flex align-items-center mb-3">
+    <input class="form-control form-control-sm me-3" type="file" id="fileInput" name="file" accept=".csv, .json" required style="width: auto;" />
+    <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Upload</button>
+  </form>
+
+  <form id="byor-form-submit" method="get">
+    <input
+      type="text"
+      name="documentId"
+      id="document-input"
+      placeholder="e.g. https://docs.google.com/spreadsheets/d/<sheetid> or hosted CSV/JSON file"
+      readonly
+    />
+    <input type="submit" value="Build my radar" />
+    <a href="https://www.thoughtworks.com/radar/byor#guide">Need help?</a>
+  </form>
+</div>
+
       <div class="graph-header"></div>
       <div id="radar">
         <p class="no-blip-text">
