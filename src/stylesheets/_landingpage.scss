@@ -23,7 +23,6 @@
     }
   }
 }
-
 .input-sheet-form {
   @include eight-column-layout-margin;
   display: flex;
@@ -42,9 +41,46 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    flex-wrap: nowrap;
     align-items: center;
+    flex-wrap: nowrap;
 
+    // File upload input and button style
+    input#fileInput {
+      font-family: $baseFontFamily;
+      background-color: $mist;
+      border: 1px solid #d5d9db;
+      letter-spacing: 0.06px;
+      height: 48px; // Set height to match the button
+      margin-bottom: 20px;
+      padding: 8px 12px;
+      color: $black;
+      font-size: 18px;
+      width: auto;
+
+      &::placeholder {
+        color: #3c606f;
+      }
+    }
+
+    button#button-addon2 {
+      background-color: $button-normal;
+      color: $white;
+      font-size: 18px;
+      font-family: $baseFontFamily;
+      font-weight: bold;
+      padding-left: 20px;
+      padding-right: 20px;
+      border: none;
+      height: 48px; // Ensure same height as input field
+      cursor: pointer;
+      margin-left: 10px;
+
+      &:focus {
+        outline: auto;
+      }
+    }
+
+    // Document input style
     input#document-input {
       font-family: $baseFontFamily;
       background-color: $mist;
@@ -72,10 +108,12 @@
       margin-bottom: 18px;
       border: none;
       cursor: pointer;
+
       &:focus {
         outline: auto;
       }
     }
+
     input:disabled {
       cursor: not-allowed;
       opacity: 0.9;
