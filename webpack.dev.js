@@ -14,81 +14,84 @@ const main = ['./src/site.js']
 const scssVariables = []
 
 Object.entries(graphConfig).forEach(function ([key, value]) {
-    scssVariables.push(`$${key}: ${value}px;`)
+  scssVariables.push(`$${key}: ${value}px;`)
 })
 
 Object.entries(uiConfig).forEach(function ([key, value]) {
-    scssVariables.push(`$${key}: ${value}px;`)
+  scssVariables.push(`$${key}: ${value}px;`)
 })
 
 Object.entries(featureToggles).forEach(function ([key, value]) {
-    scssVariables.push(`$${key}: ${value};`)
+  scssVariables.push(`$${key}: ${value};`)
 })
 
 module.exports = merge(common, {
-    mode: 'development',
-    entry: { main: main },
-    performance: {
-        hints: false,
-    },
-    module: {
-        rules: [
-            {
-                test: /\.scss$/,
-                exclude: /node_modules/,
-                use: [
-                    MiniCssExtractPlugin.loader,
-                    {
-                        loader: 'css-loader',
-                        options: { importLoaders: 1, modules: 'global', url: false },
-                    },
-                    {
-                        loader: 'postcss-loader',
-                        options: {
-                            postcssOptions: {
-                                plugins: [
-                                    postcssPresetEnv({
-                                        browsers: 'last 2 versions',
-                                        stage: 1,
-                                    }),
-                                    cssnano({
-                                        preset: ['default', { discardComments: { removeAll: true } }],
-                                    }),
-                                ],
-                            },
-                        },
-                    },
-                    {
-                        loader: 'sass-loader',
-                        options: {
-                            additionalData: scssVariables.join('\n'),
-                        },
-                    },
+  mode: 'development',
+  entry: { main: main },
+  performance: {
+    hints: false,
+  },
+  module: {
+    rules: [
+      {
+        test: /\.scss$/,
+        exclude: /node_modules/,
+        use: [
+          MiniCssExtractPlugin.loader,
+          {
+            loader: 'css-loader',
+            options: { importLoaders: 1, modules: 'global', url: false },
+          },
+          {
+            loader: 'postcss-loader',
+            options: {
+              postcssOptions: {
+                plugins: [
+                  postcssPresetEnv({
+                    browsers: 'last 2 versions',
+                    stage: 1,
+                  }),
+                  cssnano({
+                    preset: ['default', { discardComments: { removeAll: true } }],
+                  }),
                 ],
+              },
             },
+          },
+          {
+            loader: 'sass-loader',
+            options: {
+              additionalData: scssVariables.join('\n'),
+            },
+          },
         ],
-    },
-    plugins: [
-        new webpack.DefinePlugin({
-            'process.env.ENVIRONMENT': JSON.stringify('development'),
-        }),
-        new MiniCssExtractPlugin({
-            filename: '[name].css',
-            chunkFilename: '[id].css',
-        }),
+      },
     ],
-    devtool: 'source-map',
-    watchOptions: {
-        aggregateTimeout: 300,
-        poll: 1000,
+  },
+  plugins: [
+    new webpack.DefinePlugin({
+      'process.env.ENVIRONMENT': JSON.stringify('development'),
+    }),
+    new MiniCssExtractPlugin({
+      filename: '[name].css',
+      chunkFilename: '[id].css',
+    }),
+  ],
+  devtool: 'source-map',
+  watchOptions: {
+    aggregateTimeout: 300,
+    poll: 1000,
+  },
+  devServer: {
+    static: {
+      directory: path.join(__dirname, 'public'), // Serve static files
     },
-    devServer: {
-        static: {
-            directory: path.join(__dirname, 'public'), // Adjust as necessary
-        },
-        proxy: {
-            '/upload': 'http://localhost:3000', // Proxy to your Express server
-        },
-        port: 8080, // Change the port if necessary
+    proxy: {
+      '/api': {
+        target: 'http://localhost:3000', // Your backend server port
+        changeOrigin: true,
+      },
     },
+    port: 8080, // Webpack Dev Server port
+  },
 })
